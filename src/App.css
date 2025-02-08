@@ -4,5 +4,5 @@ body { background-image: url('https://static.vecteezy.com/system/resources/previ
   background-position: center center;
 }
 h2 {color: aliceblue;}
-#root {  backdrop-filter: blur(5px); height: 100vh;}
-.container { background-color:rgb(75 103 143 / 59%); padding: 20px;}
+#root {  backdrop-filter: blur(5px); height: 100vh; display: flex; align-items: center;}
+.container { background-color:rgb(75 103 143 / 59%); padding: 30px; border-radius: 10px;}

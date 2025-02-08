@@ -3,8 +3,20 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import { alignProperty } from "@mui/material/styles/cssUtils";
+
 const API_KEY = "5888311e0d0243dd89d160527250802";
-const LOCATIONS = ["Amritsar", "Pune", "Kolkata", "Bangalore", "Mumbai", "Patna"];
+const LOCATIONS = [
+  "Amritsar",
+  "Pune",
+  "Kolkata",
+  "Bangalore",
+  "Mumbai",
+  "Patna",
+];
 
 const App = () => {
   const [weatherData, setWeatherData] = useState({});
@@ -32,10 +44,13 @@ const App = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <h2 className="text-center mb-4">Weather Forecast</h2>
       {loading ? (
-        <p className="text-center">Loading...</p>
+         <Backdrop
+         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}    open={true}    >
+         <CircularProgress color="inherit" />
+       </Backdrop>
       ) : (
         <div className="row">
           {LOCATIONS.map((location) => (
@@ -43,10 +58,15 @@ const App = () => {
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">{location}</h5>
-                  <div>    <img src= {
-                      weatherData[location].forecast.forecastday[0].day
-                        .condition.icon
-                    } /></div>
+                  <div>
+                    {" "}
+                    <img
+                      src={
+                        weatherData[location].forecast.forecastday[0].day
+                          .condition.icon
+                      }
+                    />
+                  </div>
                   {weatherData[location] ? (
                     <p className="card-text">
                       Temperature: {weatherData[location].current.temp_c}°C
@@ -55,9 +75,8 @@ const App = () => {
                       {
                         weatherData[location].forecast.forecastday[0].day
                           .condition.text
-                      } 
-                  
-                     <br />
+                      }
+                      <br />
                       Simbol:{" "}
                       {
                         weatherData[location].forecast.forecastday[0].day
@@ -75,6 +94,7 @@ const App = () => {
           ))}
         </div>
       )}
+      <div><Button variant="contained">MUI Button</Button></div>
     </div>
   );
 };
