@@ -3,14 +3,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-const API_KEY = "d77e42193aaa4f2880583717250802";
-const LOCATIONS = [
-  "Amritsar",
-"Pune",
-  "Kolkata",
-  "Bangalore",
- 
-];
+const API_KEY = "5888311e0d0243dd89d160527250802";
+const LOCATIONS = ["Amritsar", "Pune", "Kolkata", "Bangalore", "Mumbai", "Patna"];
 
 const App = () => {
   const [weatherData, setWeatherData] = useState({});
@@ -22,7 +16,7 @@ const App = () => {
         const data = {};
         for (const location of LOCATIONS) {
           const response = await axios.get(
-            `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${location}&aqi=no`
+            `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=5&aqi=yes&alerts=yes`
           );
           data[location] = response.data;
         }
@@ -49,11 +43,26 @@ const App = () => {
               <div className="card">
                 <div className="card-body">
                   <h5 className="card-title">{location}</h5>
+                  <div>    <img src= {
+                      weatherData[location].forecast.forecastday[0].day
+                        .condition.icon
+                    } /></div>
                   {weatherData[location] ? (
                     <p className="card-text">
-                      Temperature: {weatherData[location].current.temp_c}°C                      
+                      Temperature: {weatherData[location].current.temp_c}°C
                       <br />
-                      Weather: {weatherData[location].current.condition[0]}
+                      Weather:{" "}
+                      {
+                        weatherData[location].forecast.forecastday[0].day
+                          .condition.text
+                      } 
+                  
+                     <br />
+                      Simbol:{" "}
+                      {
+                        weatherData[location].forecast.forecastday[0].day
+                          .condition.text
+                      }
                       <br />
                       Wind Speed: {weatherData[location].current.wind_kph} km/h
                     </p>
